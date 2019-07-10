@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  openapi-validator:
+
+    image: node:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app:Z
+    entrypoint:
+      - node
+      - index.js
+    working_dir: /usr/src/app
+    environment:
+    networks:
+      - openapi-validator
+
+networks:
+  openapi-validator:
+

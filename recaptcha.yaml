@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: Google ReCaptcha
+  description: ReCaptcha API - refer to https://developers.google.com/recaptcha/docs/verify
+  version: 0.0.1
+
+servers:
+  - url: https://www.google.com/recaptcha/api
+    description: Google Recaptcha Site Verify URL
+
+
+paths:
+  /siteverify:
+    post:
+      summary: Verify Captcha
+      description: Verify Captcha
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                secret:
+                  type: string
+                  description: Required. The shared key between your site and reCAPTCHA.
+                response:
+                  type: string
+                  description: Required. The user response token provided by the reCAPTCHA client-side integration on your site.
+                remoteip:
+                  type: string
+                  description: Optional. The user's IP address.
+              required:
+                - secret
+                - response
+      responses:
+        '200':
+          description: A JSON object verifying the captcha
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  challenge_ts:
+                    type: string
+                  hostname:
+                    type: string
+                  error-codes:
+                    type: array
+                    items:
+                      type: string
+                required:
+                  - success
+                  - challenge_ts
+                  - hostname
